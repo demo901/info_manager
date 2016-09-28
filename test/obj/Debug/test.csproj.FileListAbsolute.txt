@@ -1,0 +1,10 @@
+e:\SharpDevelop Projects\test\test\bin\Debug\test.exe
+e:\SharpDevelop Projects\test\test\bin\Debug\test.pdb
+e:\SharpDevelop Projects\test\test\obj\Debug\test.exe
+e:\SharpDevelop Projects\test\test\obj\Debug\test.pdb
+e:\SharpDevelop Projects\test\test\obj\Debug\test.MainForm.resources
+e:\SharpDevelop Projects\test\test\obj\Debug\test.csproj.GenerateResource.Cache
+e:\SharpDevelop Projects\test\test\obj\Debug\test.Form1.resources
+e:\SharpDevelop Projects\test\test\bin\Debug\test.exe.config
+e:\SharpDevelop Projects\test\test\bin\Debug\System.Data.SQLite.dll
+e:\SharpDevelop Projects\test\test\obj\Debug\ResolveAssemblyReference.cache

@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+# SharpDevelop 4.4
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{F86D99FC-C6DC-4D2E-85DC-4840D90041CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F86D99FC-C6DC-4D2E-85DC-4840D90041CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F86D99FC-C6DC-4D2E-85DC-4840D90041CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F86D99FC-C6DC-4D2E-85DC-4840D90041CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F86D99FC-C6DC-4D2E-85DC-4840D90041CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
