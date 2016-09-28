@@ -12,11 +12,3 @@ E:\info_manager\test\obj\Release\test.Form1.resources
 E:\info_manager\test\obj\Release\test.MainForm.resources
 E:\info_manager\test\obj\Release\test.csproj.GenerateResource.Cache
 E:\info_manager\test\obj\Release\test.exe
-E:\ownCloud\20160824\info_manager\test\bin\Release\manage.exe.config
-E:\ownCloud\20160824\info_manager\test\bin\Release\manage.exe
-E:\ownCloud\20160824\info_manager\test\obj\Release\ResolveAssemblyReference.cache
-E:\ownCloud\20160824\info_manager\test\obj\Release\test.Form1.resources
-E:\ownCloud\20160824\info_manager\test\obj\Release\test.Form2.resources
-E:\ownCloud\20160824\info_manager\test\obj\Release\test.MainForm.resources
-E:\ownCloud\20160824\info_manager\test\obj\Release\test.csproj.GenerateResource.Cache
-E:\ownCloud\20160824\info_manager\test\obj\Release\manage.exe

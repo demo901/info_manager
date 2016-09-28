@@ -647,7 +647,7 @@ namespace test
 				}
 				cmd.Dispose();
 			}catch(Exception ex){
-				//MessageBox.Show(ex.ToString());
+				MessageBox.Show("【Debug】领用时出现系统错误");
 				ex.ToString();
 			}
 		}
@@ -728,7 +728,7 @@ namespace test
 				reader.Dispose();
 				cmd.Dispose();
 			}catch(Exception ex){
-				//MessageBox.Show(ex.ToString());
+				MessageBox.Show("【Debug】选择型号下拉时出现系统错误");
 				ex.ToString();
 			}
 		}
@@ -770,7 +770,10 @@ namespace test
 					cmd.CommandText = sql;
 					reader = cmd.ExecuteReader();
 					if(reader.Read()){
-						loan_sum = int.Parse(reader[0].ToString());
+						string s=reader[0].ToString();
+						if(s.Length == 0)
+							s="0";
+						loan_sum = int.Parse(s);
 					}
 					reader.Close();
 					//计算已经归还物品数量
@@ -779,12 +782,15 @@ namespace test
 					cmd.CommandText = sql;
 					reader = cmd.ExecuteReader();
 					if(reader.Read()){
-						return_sum = int.Parse(reader[0].ToString());
+						string s=reader[0].ToString();
+						if(s.Length == 0)
+							s="0";
+						return_sum = int.Parse(s);
 					}
 					reader.Close();
 					
 					if(loan_sum >= (return_sum + int.Parse(nums))){
-						MessageBox.Show("loan_sum="+loan_sum+",sums="+nums);
+						//MessageBox.Show("loan_sum="+loan_sum+",sums="+nums);
 						sql = "insert into history (udep,uname,main_id,nums,ctime,flag) values ('"+udep+"','"+user+"',"+rowid.ToString()+","+nums+",'"+ctime+"',1)";
 						cmd.CommandText = sql;
 						cmd.ExecuteNonQuery();
@@ -801,7 +807,7 @@ namespace test
 				reader.Dispose();
 				cmd.Dispose();
 			}catch(Exception ex){
-				MessageBox.Show(ex.ToString());
+				MessageBox.Show("【Debug】归还时出现系统错误");
 				ex.ToString();
 			}
 		}
