@@ -126,7 +126,7 @@ namespace test
 			try{
 				SQLiteCommand cmd = connection.CreateCommand();
 				SQLiteDataReader reader;
-				cmd.CommandText = "select rowid,name,model,nums,source,ctime,collection,comment from main";
+				cmd.CommandText = "select rowid,name,model,unit,nums,source,ctime,collection,comment from main";
 				reader = cmd.ExecuteReader();
 				while(reader.Read()){
 					dgv0.Rows.Add(new object[] {
@@ -137,7 +137,8 @@ namespace test
 		              	reader[4].ToString(),
 		              	reader[5].ToString(),
 		              	reader[6].ToString(),
-		              	reader[7].ToString()
+		              	reader[7].ToString(),
+		              	reader[8].ToString()
 					});
 				}
 				reader.Close();
@@ -156,6 +157,7 @@ namespace test
 			dgv0.Columns.Add("sid","序号");
 			dgv0.Columns.Add("name","物品名称");
 			dgv0.Columns.Add("model","规格型号");
+			dgv0.Columns.Add("unit","单位");
 			dgv0.Columns.Add("nums","数量");
 			
 			if(popFlag == 1){
@@ -180,6 +182,7 @@ namespace test
 			dgv0.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 			dgv0.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 			dgv0.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+			dgv0.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 		}
 		//第二个页面搜索功能
 		void Search_btn2Click(object sender, EventArgs e)
@@ -194,9 +197,10 @@ namespace test
 				dgv2.Columns.Add("sid","序号");
 				dgv2.Columns.Add("name","名称");
 				dgv2.Columns.Add("model","型号");
+				dgv2.Columns.Add("unit","单位");
+				dgv2.Columns.Add("nums","数量");
 				dgv2.Columns.Add("udep","部门");
 				dgv2.Columns.Add("user","人员");
-				dgv2.Columns.Add("nums","数量");
 				dgv2.Columns.Add("ctime","时间");
 				dgv2.Columns.Add("flag","操作");
 				dgv2.ReadOnly = true;
@@ -209,8 +213,9 @@ namespace test
 				dgv2.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 				dgv2.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 				dgv2.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+				dgv2.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 				
-				string sql = "select a.rowid,b.name,b.model,a.nums,a.udep,a.uname,a.ctime,a.flag from history a,main b where a.main_id=b.rowid ";
+				string sql = "select a.rowid,b.name,b.model,b.unit,a.nums,a.udep,a.uname,a.ctime,a.flag from history a,main b where a.main_id=b.rowid ";
 				if(search_key2.Text.ToString().Equals("部门") || search_key2.Text.Equals("领取人")){
 					if(search_txt2.Text.Trim().Length > 0){
 						if(search_key2.Text.Equals("部门"))
@@ -223,7 +228,7 @@ namespace test
 				cmd.CommandText = sql;
 				reader = cmd.ExecuteReader();
 				while(reader.Read()){
-					string flag = reader[7].ToString();
+					string flag = reader[8].ToString();
 					if(flag.Equals("0"))
 						flag = "领用";
 					else
@@ -236,6 +241,7 @@ namespace test
 		              	reader[4].ToString(),
 		              	reader[5].ToString(),
 		              	reader[6].ToString(),
+		              	reader[7].ToString(),
 		              	flag
 					});
 				}
@@ -262,7 +268,7 @@ namespace test
 				if(search_key.Text.ToString().Equals("物品名称") || search_key.Text.Equals("型号")){
 					popFlag = 1;
 					set_dgv0_format();
-					sql = "select rowid,name,model,nums,source,ctime,collection,comment from main where ";
+					sql = "select rowid,name,model,unit,nums,source,ctime,collection,comment from main where ";
 					if(search_key.Text.Equals("物品名称"))
 						sql += "name like '%";
 					else
@@ -279,7 +285,8 @@ namespace test
 			              	reader[4].ToString(),
 			              	reader[5].ToString(),
 			              	reader[6].ToString(),
-			              	reader[7].ToString()
+			              	reader[7].ToString(),
+			              	reader[8].ToString()
 						});
 					}
 				}
@@ -287,7 +294,7 @@ namespace test
 					popFlag = 2;
 					set_dgv0_format();
 
-					sql = "select a.rowid,b.name,b.model,a.nums,a.udep,a.uname,a.ctime,a.flag from history a,main b where a.main_id=b.rowid and ";
+					sql = "select a.rowid,b.name,b.model,b.unit,a.nums,a.udep,a.uname,a.ctime,a.flag from history a,main b where a.main_id=b.rowid and ";
 					if(search_key.Text.Equals("部门"))
 						sql += "a.udep like '%";
 					else
@@ -296,7 +303,7 @@ namespace test
 					cmd.CommandText = sql;
 					reader = cmd.ExecuteReader();
 					while(reader.Read()){
-						string flag = reader[7].ToString();
+						string flag = reader[8].ToString();
 						if(flag.Equals("0"))
 							flag = "领用";
 						else
@@ -309,6 +316,7 @@ namespace test
 			              	reader[4].ToString(),
 			              	reader[5].ToString(),
 			              	reader[6].ToString(),
+			              	reader[7].ToString(),
 			              	flag
 						});
 					}
@@ -332,6 +340,7 @@ namespace test
 			int rowindex = 0;//表格的行号
 			string name = string.Empty;
 			string model = string.Empty;
+			string units = string.Empty;
 			string nums = string.Empty;
 			string source = string.Empty;
 			string ctime = string.Empty;
@@ -361,33 +370,37 @@ namespace test
 					else
 						model = "";
 					if(dgv0.Rows[rowindex].Cells[3].Value != null)//3
-						nums = dgv0.Rows[rowindex].Cells[3].Value.ToString();
+						units= dgv0.Rows[rowindex].Cells[3].Value.ToString();
+					else
+						units = "";
+					if(dgv0.Rows[rowindex].Cells[4].Value != null)//4
+						nums = dgv0.Rows[rowindex].Cells[4].Value.ToString();
 					else
 						nums = "0";
-					if(dgv0.Rows[rowindex].Cells[4].Value != null)//4
-						source = dgv0.Rows[rowindex].Cells[4].Value.ToString();
+					if(dgv0.Rows[rowindex].Cells[5].Value != null)//5
+						source = dgv0.Rows[rowindex].Cells[5].Value.ToString();
 					else
 						source = "";
-					if(dgv0.Rows[rowindex].Cells[5].Value != null)
-						ctime = dgv0.Rows[rowindex].Cells[5].Value.ToString();
+					if(dgv0.Rows[rowindex].Cells[6].Value != null)
+						ctime = dgv0.Rows[rowindex].Cells[6].Value.ToString();
 					else
 						ctime = "";
-					if(dgv0.Rows[rowindex].Cells[6].Value != null)
-						collection = dgv0.Rows[rowindex].Cells[6].Value.ToString();
+					if(dgv0.Rows[rowindex].Cells[7].Value != null)
+						collection = dgv0.Rows[rowindex].Cells[7].Value.ToString();
 					else
 						collection = "";
-					if(dgv0.Rows[rowindex].Cells[7].Value != null)
-						comment = dgv0.Rows[rowindex].Cells[7].Value.ToString();
+					if(dgv0.Rows[rowindex].Cells[8].Value != null)
+						comment = dgv0.Rows[rowindex].Cells[8].Value.ToString();
 					else
 						comment = "";
 					if(flag.Equals("A")){//新增记录
-						sql = "insert into main (name,model,nums,source,ctime,collection,comment) values ('"+name+"','"+model+"',"+nums+",'"+source+"','"+ctime+"','"+collection+"','"+comment+"')";
+						sql = "insert into main (name,model,unit,nums,source,ctime,collection,comment) values ('"+name+"','"+model+"','"+units+"',"+nums+",'"+source+"','"+ctime+"','"+collection+"','"+comment+"')";
 						cmd.CommandText = sql;
 						cmd.ExecuteNonQuery();
 						continue;
 					}
 					if(flag.Equals("E")){//修改记录
-						sql = "update main set name='"+name+"',model='"+model+"',nums="+nums+",source='"+source+"',ctime='"+ctime+"',collection='"+collection+"',comment='"+comment+"' where rowid="+rowid;
+						sql = "update main set name='"+name+"',model='"+model+"',unit='"+units+"',nums="+nums+",source='"+source+"',ctime='"+ctime+"',collection='"+collection+"',comment='"+comment+"' where rowid="+rowid;
 						cmd.CommandText = sql;
 						cmd.ExecuteNonQuery();
 						continue;
@@ -883,11 +896,11 @@ namespace test
 	        	try{
 					SQLiteCommand cmd = connection.CreateCommand();
 					SQLiteDataReader reader;
-					cmd.CommandText = "select rowid,name,model,nums,source,strftime('%Y-%m-%d %H:%M:%S',ctime),collection,comment from main";
+					cmd.CommandText = "select rowid,name,model,unit,nums,source,ctime,collection,comment from main";
 					reader = cmd.ExecuteReader();
-					file.WriteLine("序号,物品名称,型号,数量,来源,时间,仓库,备注");
+					file.WriteLine("序号,物品名称,型号,单位,数量,来源,时间,仓库,备注");
 					while(reader.Read()){
-						file.WriteLine(reader[0].ToString()+","+reader[1].ToString()+","+reader[2].ToString()+","+reader[3].ToString()+","+reader[4].ToString()+","+reader[5].ToString()+","+reader[6].ToString()+","+reader[7].ToString());
+						file.WriteLine(reader[0].ToString()+","+reader[1].ToString()+","+reader[2].ToString()+","+reader[3].ToString()+","+reader[4].ToString()+","+reader[5].ToString()+","+reader[6].ToString()+","+reader[7].ToString()+","+reader[8].ToString());
 					}
 					reader.Close();
 					reader.Dispose();
@@ -903,7 +916,7 @@ namespace test
 	        	try{
 					SQLiteCommand cmd = connection.CreateCommand();
 					SQLiteDataReader reader;
-					cmd.CommandText = "select rowid,udep,uname,main_id,nums,strftime('%Y-%m-%d %H:%M:%S',ctime),flag from history";
+					cmd.CommandText = "select rowid,udep,uname,main_id,nums,ctime,flag from history";
 					reader = cmd.ExecuteReader();
 					string flag = string.Empty;
 					file.WriteLine("序号,部门,人员,物品序号,数量,时间,操作");
@@ -942,8 +955,8 @@ namespace test
 							cmd.ExecuteNonQuery();
 							while ((str = sr.ReadLine()) != null){
 								string[] sArray = Regex.Split(str,",");
-								//"序号,物品名称,型号,数量,来源,时间,仓库,备注"
-								sql = "insert into main (name,model,nums,source,ctime,collection,comment) values ('"+sArray[1]+"','"+sArray[2]+"',"+sArray[3]+",'"+sArray[4]+"','"+sArray[5]+"','"+sArray[6]+"','"+sArray[7]+"')";
+								//"物品名称,型号,单位,数量,来源,时间,仓库,备注"
+								sql = "insert into main (name,model,unit,nums,source,ctime,collection,comment) values ('"+sArray[1]+"','"+sArray[2]+"','"+sArray[3]+"',"+sArray[4]+",'"+sArray[5]+"','"+sArray[6]+"','"+sArray[7]+"','"+sArray[8]+"')";
 								cmd.CommandText = sql;
 								cmd.ExecuteNonQuery();
 							}

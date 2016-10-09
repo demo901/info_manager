@@ -73,7 +73,7 @@ namespace test
 		{
 			try{
 				SQLiteCommand cmd = conn.CreateCommand();
-				cmd.CommandText = "CREATE TABLE main (name VARCHAR(100) NOT NULL,model VARCHAR(100),nums INTEGER,source VARCHAR(100),ctime VARCHAR(100),collection VARCHAR(100),comment VARCHAR(255))";//主表
+				cmd.CommandText = "CREATE TABLE main (name VARCHAR(100) NOT NULL,model VARCHAR(100),unit VARCHAR(100),nums INTEGER,source VARCHAR(100),ctime VARCHAR(100),collection VARCHAR(100),comment VARCHAR(255))";//主表
 				cmd.ExecuteNonQuery();
 				cmd.CommandText = "CREATE TABLE history (udep VARCHAR(100),uname VARCHAR(100),main_id INTEGER NOT NULL,nums INTEGER,ctime VARCHAR(100),flag INTEGER(1) NOT NULL DEFAULT(0))";//操作记录表
 				cmd.ExecuteNonQuery();
